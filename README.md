@@ -3,11 +3,13 @@
 Consigna: tomando como contexto la consigna del TP 1 realizar lo siguiente:
 
 1. Luego de clonar el repo crear una nueva Branch protection rule con las siguientes especificaciones
+   
     a. Branch name pattern -> main
    
     b. Tildar SOLAMENTE "Require a pull request before merging" y "Do not allow bypassing the above settings"
 
 3. Reutilizando las clases del TP 1 se harán las siguientes modificaciones:
+   
     a. Agregar la interface Cocinable, sólo se puede cocinar con los objetos que implementen esta interface
    
     b. Agregar la interface Despensable, esto permitirá generar una clase nueva Utensilio para agregar a las recetas los utensilios a usarse. Ahora en la despensa no habrá sólo ingredientes, sino todos aquellos objetos que sean Despensable's
