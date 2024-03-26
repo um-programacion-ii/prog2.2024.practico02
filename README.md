@@ -8,7 +8,7 @@ Consigna: tomando como contexto la consigna del TP 1 realizar lo siguiente:
    
     b. Tildar SOLAMENTE "Require a pull request before merging" y "Do not allow bypassing the above settings"
 
-3. Reutilizando las clases del TP 1 se harán las siguientes modificaciones:
+2. Reutilizando las clases del TP 1 se harán las siguientes modificaciones:
    
     a. Agregar la interface Cocinable, sólo se puede cocinar con los objetos que implementen esta interface
    
