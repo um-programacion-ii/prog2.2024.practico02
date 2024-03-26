@@ -15,4 +15,4 @@ Consigna: tomando como contexto la consigna del TP 1 realizar lo siguiente:
     f. Agregar una excepción propia VidaUtilInsuficiente para el caso que el tiempo de vida restante no alcance para cocinar
     g. Agregar una excepción propia StockInsuficiente para el caso que la Despensa no tenga el Ingrediente suficiente para la receta
     h. Agregar un servicio DespensaService que se encargue de las verificaciones de stock y tiempo de vida útil antes de cocinar, también agregar un método renovarUtensilios que permita "resetear" el tiempo de vita útil de los Utensilio's inutilizables
-    
+    i. Tratar de usar stream's donde sea posible
