@@ -27,7 +27,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/franconarvaez/Escritorio/Program2",
+    "last_opened_file_path": "/home/franconarvaez/Escritorio/Program2/practico-02-FrancoNarvaez",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -150,6 +154,7 @@
       <workItem from="1711894893854" duration="282000" />
       <workItem from="1711903625319" duration="124000" />
       <workItem from="1711903782282" duration="40000" />
+      <workItem from="1711903843863" duration="331000" />
     </task>
     <servers />
   </component>
