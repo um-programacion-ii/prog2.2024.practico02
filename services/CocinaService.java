@@ -1,9 +1,6 @@
 package services;
 
-import entidades.Chef;
-import entidades.Despensa;
-import entidades.Ingrediente;
-import entidades.Receta;
+import entidades.*;
 
 public class CocinaService {
 
@@ -19,7 +16,9 @@ public class CocinaService {
 
     public void prepararPlatos(Receta receta){
         Ingrediente[] ingredientes = receta.getIngredientes();
+        Utensilio[] utensilios = receta.getUtensilios();
         boolean suficientesIngredientes = true;
+        boolean suficientesUtensilios = true;
         for(Ingrediente ingrediente : ingredientes){
             if (!despensa.contieneSuficienteIngrediente(ingrediente)) {
                 suficientesIngredientes = false;
@@ -27,14 +26,24 @@ public class CocinaService {
                 System.out.println("Faltan " + (ingrediente.getCantidad() - despensa.getCantidadIngrediente(ingrediente)) + " unidades.");
             }
         }
-        if (suficientesIngredientes) {
+        for(Utensilio utensilio : utensilios){
+            if (!despensa.contieneSuficienteUtensilio(utensilio)) {
+                suficientesUtensilios = false;
+                System.out.println("No hay suficientes usos de  " + utensilio.getNombre() + " en la despensa.");
+                System.out.println("Faltan " + (utensilio.getUsos() - despensa.getCantidadUtensilio(utensilio)) + " usos.");
+            }
+        }
+        if (suficientesIngredientes && suficientesUtensilios) {
             // Preparar la receta
             for (Ingrediente ingrediente : ingredientes) {
                 despensa.sacarIngrediente(ingrediente);
             }
-            System.out.println("entidades.Receta preparada correctamente por el entidades.Chef " + chef.getNombre());
+            for (Utensilio utensilio : utensilios) {
+                despensa.sacarUtensilio(utensilio);
+            }
+            System.out.println("La Receta preparada correctamente por el Chef " + chef.getNombre());
         } else {
-            System.out.println("El entidades.Chef " + chef.getNombre() + " no pudo preparar la receta debido a la falta de ingredientes.");
+            System.out.println("El Chef " + chef.getNombre() + " no pudo preparar la receta debido a la falta de ingredientes.");
         }
     }
 }

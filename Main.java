@@ -1,6 +1,7 @@
 import entidades.Chef;
 import entidades.Despensa;
 import entidades.Ingrediente;
+import entidades.Utensilio;
 import recetas.HuevoDuro;
 import recetas.HuevoFrito;
 import recetas.Torta;
@@ -8,79 +9,43 @@ import services.CocinaService;
 
 public class Main {
     public static void main(String[] args) {
+        Ingrediente huevo = new Ingrediente("Huevo", 6);
+        Ingrediente harina = new Ingrediente("Harina", 500);
+        Ingrediente azucar = new Ingrediente("Azucar", 250);
+        Ingrediente sal = new Ingrediente("Sal", 100);
+        Ingrediente aceite = new Ingrediente("Aceite", 375);
+        Ingrediente agua = new Ingrediente("Agua", 8000);
+        Ingrediente leche = new Ingrediente("Leche", 1000);
+        Ingrediente manteca = new Ingrediente("Manteca", 600);
 
-        System.out.println("----------------------- Ejercicio 1 -----------------------");
+        Utensilio bowl = new Utensilio("Bowl", 50);
+        Utensilio batidora = new Utensilio("Batidora", 50);
+        Utensilio horno = new Utensilio("Horno", 50);
+        Utensilio sarten = new Utensilio("Sarten", 50);
+        Utensilio cuchara = new Utensilio("Cuchara", 100);
+        Utensilio cuchillo = new Utensilio("Cuchillo", 100);
+        Utensilio tenedor = new Utensilio("Tenedor", 100);
+        Utensilio cucharon = new Utensilio("Cucharon", 100);
+        Utensilio olla = new Utensilio("Olla", 100);
 
-        System.out.println(" ");
-        Ingrediente ingrediente1 = new Ingrediente("Azucar", 100);
-//        System.out.println(ingrediente1.toString());
+        Ingrediente[] ingredientes = {huevo, harina, azucar, sal, aceite, agua, leche, manteca};
+        Utensilio[] utensilios = {bowl, batidora, horno, sarten, cuchara, cuchillo, tenedor, cucharon, olla};
 
-        Ingrediente ingrediente2 = new Ingrediente();
-        ingrediente2.setNombre("Sal");
-        ingrediente2.setCantidad(200);
-//        System.out.println(ingrediente2.toString());
+        Despensa despensa = new Despensa(ingredientes, utensilios);
 
+        Chef chef = new Chef("Gordon Ramsay", 50);
 
-
-        System.out.println(" ");
-
-        System.out.println("----------------------- Ejercicio 2 -----------------------");
-
-        System.out.println(" ");
-
-        ingrediente2.sacarIngrediente(300);
-        Ingrediente harina = new Ingrediente("Harina", 200);
-        Ingrediente polvoHornear = new Ingrediente("Polvo de hornear", 100);
-        Ingrediente leche = new Ingrediente("Leche", 300);
-        Ingrediente huevo = new Ingrediente("Huevo", 10);
-        Ingrediente aceite = new Ingrediente("Aceite", 50);
-
-        Despensa despensa = new Despensa(new Ingrediente[10]);
-        despensa.addIngrediente(ingrediente1);
-        despensa.addIngrediente(ingrediente2);
-        despensa.addIngrediente(harina);
-        despensa.addIngrediente(polvoHornear);
-        despensa.addIngrediente(leche);
-        despensa.addIngrediente(huevo);
-        despensa.addIngrediente(aceite);
-
-        despensa.mostrarIngredientes();
-
-        despensa.getIngrediente("Azucar", 25);
-
-        despensa.mostrarIngredientes();
-
-        System.out.println(" ");
-        System.out.println("----------------------- Ejercicio 3 -----------------------");
-        System.out.println(" ");
-
-        HuevoFrito huevoFrito = new HuevoFrito();
-        huevoFrito.mostrarReceta();
-
-        HuevoDuro huevoDuro = new HuevoDuro();
-        huevoDuro.mostrarReceta();
-
-        Torta torta = new Torta();
-        torta.mostrarReceta();
-        System.out.println(" ");
-        System.out.println("----------------------- Ejercicio 4 -----------------------");
-        System.out.println(" ");
-
-        Chef chef = new Chef ("Linguini",3);
         CocinaService cocinaService = new CocinaService(chef, despensa);
 
-        System.out.println("Preparando huevo frito");
-        cocinaService.prepararPlatos(huevoFrito);
-        System.out.println(" ");
+        Torta torta = new Torta();
+        HuevoDuro huevoDuro = new HuevoDuro();
+        HuevoFrito huevoFrito = new HuevoFrito();
 
-        System.out.println("Preparando huevo duro");
-        cocinaService.prepararPlatos(huevoDuro);
-        System.out.println(" ");
-        System.out.println("Preparando torta");
         cocinaService.prepararPlatos(torta);
-
-
-        despensa.mostrarIngredientes();
+        System.out.println("-------------------------------------------------");
+        cocinaService.prepararPlatos(huevoDuro);
+        System.out.println("-------------------------------------------------");
+        cocinaService.prepararPlatos(huevoFrito);
 
 
 

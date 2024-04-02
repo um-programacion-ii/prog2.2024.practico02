@@ -1,6 +1,9 @@
 package entidades;
 
-public class Ingrediente {
+import interfaces.Cocinable;
+import interfaces.Despensable;
+
+public class Ingrediente implements Despensable{
     private String nombre;
     private int cantidad;
 
@@ -33,7 +36,8 @@ public Ingrediente(String nombre, int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public void sacarIngrediente(int cantidad){
+    @Override
+    public void sacar(int cantidad){
     if (this.cantidad >= cantidad){
         this.cantidad -= cantidad;
     }else{
