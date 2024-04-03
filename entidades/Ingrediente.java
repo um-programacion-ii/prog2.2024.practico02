@@ -1,5 +1,6 @@
 package entidades;
 
+import excepciones.StockInsuficienteException;
 import interfaces.Cocinable;
 import interfaces.Despensable;
 
@@ -37,12 +38,13 @@ public Ingrediente(String nombre, int cantidad) {
     }
 
     @Override
-    public void sacar(int cantidad){
+    public void sacar(int cantidad) throws StockInsuficienteException {
+
     if (this.cantidad >= cantidad){
         this.cantidad -= cantidad;
     }else{
-        System.out.println("No hay suficiente ingrediente");
-        System.out.println("Faltan " + (cantidad - this.cantidad) + " unidades de " + this.nombre);
+        throw  new StockInsuficienteException("No hay suficientes unidades \n Faltan " + (cantidad - this.cantidad) + " unidades de " + this.nombre);
+//        throw new StockInsuficienteException("No hay suficientes unidades de " + this.nombre);
     }
     }
 

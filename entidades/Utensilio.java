@@ -2,6 +2,7 @@ package entidades;
 
 import interfaces.Despensable;
 import interfaces.Reutilizable;
+import excepciones.VidaUtilInsuficienteException;
 
 public class Utensilio implements Despensable, Reutilizable {
 
@@ -35,12 +36,13 @@ public class Utensilio implements Despensable, Reutilizable {
     }
 
     @Override
-    public void sacar(int cantidad) {
+    public void sacar(int cantidad) throws VidaUtilInsuficienteException{
         if (this.vidaUtil >= cantidad){
             this.vidaUtil -= cantidad;
         }else{
-            System.out.println("No hay suficientes usos");
-            System.out.println("Faltan " + (cantidad - this.vidaUtil) + " usos de " + this.nombre);
+//        throw new VidaUtilInsuficienteException("No hay suficientes usos de " + this.nombre);
+//    }
+            throw new VidaUtilInsuficienteException("No hay suficientes usos \n Faltan " + (cantidad - this.vidaUtil) + " usos de " + this.nombre);
         }
     }
 

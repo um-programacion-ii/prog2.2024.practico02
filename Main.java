@@ -2,6 +2,8 @@ import entidades.Chef;
 import entidades.Despensa;
 import entidades.Ingrediente;
 import entidades.Utensilio;
+import excepciones.StockInsuficienteException;
+import excepciones.VidaUtilInsuficienteException;
 import interfaces.Despensable;
 import recetas.HuevoDuro;
 import recetas.HuevoFrito;
@@ -12,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws StockInsuficienteException, VidaUtilInsuficienteException {
         Ingrediente huevo = new Ingrediente("Huevo", 6);
         Ingrediente harina = new Ingrediente("Harina", 500);
         Ingrediente azucar = new Ingrediente("Azucar", 250);
@@ -30,10 +32,10 @@ public class Main {
         Utensilio cuchillo = new Utensilio("Cuchillo", 100);
         Utensilio tenedor = new Utensilio("Tenedor", 100);
         Utensilio cucharon = new Utensilio("Cucharon", 100);
-        Utensilio olla = new Utensilio("Olla", 100);
+        Utensilio olla = new Utensilio("Olla", 2);
 //        Utensilio espatula = new Utensilio("Espatula", 100);
 
-        Map<String, Despensable> despensableMap= new HashMap<>();
+        Map<String, Despensable> despensableMap = new HashMap<>();
         despensableMap.put(huevo.getNombre(), huevo);
         despensableMap.put(harina.getNombre(), harina);
         despensableMap.put(azucar.getNombre(), azucar);
@@ -66,31 +68,20 @@ public class Main {
         System.out.println("------------------------------------------");
 
         System.out.println("Preparación de huevo duro:");
-        cocinaService.prepararPlatos(huevoDuro);
+        System.out.println(cocinaService.prepararPlatos(huevoDuro));
 
         System.out.println("------------------------------------------");
 
         System.out.println("Preparación de huevo frito:");
-        cocinaService.prepararPlatos(huevoFrito);
+        System.out.println(cocinaService.prepararPlatos(huevoFrito));
 
         System.out.println("------------------------------------------");
 
         System.out.println("Preparación de torta:");
-        cocinaService.prepararPlatos(torta);
-
-
+        System.out.println(cocinaService.prepararPlatos(torta));
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
 
