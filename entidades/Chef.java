@@ -32,7 +32,7 @@ public class Chef {
     }
 
     private void toStringChef(){
-        System.out.println(" EL entidades.Chef" + nombre + " posee " +estrellasMichelin+ " estrellas Michelin ");
+        System.out.println(" El Chef" + nombre + " posee " +estrellasMichelin+ " estrellas Michelin ");
     }
 
 

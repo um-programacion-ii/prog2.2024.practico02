@@ -44,7 +44,6 @@ public Ingrediente(String nombre, int cantidad) {
         this.cantidad -= cantidad;
     }else{
         throw  new StockInsuficienteException("No hay suficientes unidades \n Faltan " + (cantidad - this.cantidad) + " unidades de " + this.nombre);
-//        throw new StockInsuficienteException("No hay suficientes unidades de " + this.nombre);
     }
     }
 

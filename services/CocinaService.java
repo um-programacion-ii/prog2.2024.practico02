@@ -26,25 +26,24 @@ public class CocinaService {
         List<Despensable> ingredientes = receta.getIngredientes();
         List<Despensable> utensilios = receta.getUtensilios();
         boolean sePuedePreparar = true;
+
+        DespensaService despensaService = new DespensaService(despensa);
+
+        if (!despensaService.verificarStock(ingredientes)) {
+            sePuedePreparar = false;
+        }
+        if (!despensaService.verificarVidaUtil(utensilios)) {
+            sePuedePreparar = false;
+        }
+
         for (Despensable ingrediente : ingredientes) {
-            if (!despensa.contieneSuficienteDespensable(ingrediente)) {
-                sePuedePreparar = false;
-            }
+            despensa.sacar(ingrediente.getNombre(), ingrediente.getCantidadDisponible());
+
         }
+
         for (Despensable utensilio : utensilios) {
-            if (!despensa.contieneSuficienteDespensable(utensilio)) {
-                sePuedePreparar = false;
-            }
+             despensa.sacar(utensilio.getNombre(), utensilio.getCantidadDisponible());
         }
-
-            for (Despensable ingrediente : ingredientes) {
-                despensa.sacar(ingrediente.getNombre(), ingrediente.getCantidadDisponible());
-
-            }
-
-            for (Despensable utensilio : utensilios) {
-                despensa.sacar(utensilio.getNombre(), utensilio.getCantidadDisponible());
-                       }
 
         if (sePuedePreparar) {
             return "El Chef " + chef.getNombre() + " ha preparado exitosamente la receta: " + receta.getClass().getSimpleName();

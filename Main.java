@@ -19,7 +19,7 @@ public class Main {
         Ingrediente harina = new Ingrediente("Harina", 500);
         Ingrediente azucar = new Ingrediente("Azucar", 250);
         Ingrediente sal = new Ingrediente("Sal", 100);
-        Ingrediente aceite = new Ingrediente("Aceite", 375);
+        Ingrediente aceite = new Ingrediente("Aceite", 55);
         Ingrediente agua = new Ingrediente("Agua", 8000);
         Ingrediente leche = new Ingrediente("Leche", 1000);
         Ingrediente manteca = new Ingrediente("Manteca", 600);
@@ -33,7 +33,7 @@ public class Main {
         Utensilio tenedor = new Utensilio("Tenedor", 100);
         Utensilio cucharon = new Utensilio("Cucharon", 100);
         Utensilio olla = new Utensilio("Olla", 2);
-//        Utensilio espatula = new Utensilio("Espatula", 100);
+        Utensilio espatula = new Utensilio("Espatula", 100);
 
         Map<String, Despensable> despensableMap = new HashMap<>();
         despensableMap.put(huevo.getNombre(), huevo);
@@ -53,7 +53,7 @@ public class Main {
         despensableMap.put(tenedor.getNombre(), tenedor);
         despensableMap.put(cucharon.getNombre(), cucharon);
         despensableMap.put(olla.getNombre(), olla);
-//        despensableMap.put(espatula.getNombre(), espatula);
+        despensableMap.put(espatula.getNombre(), espatula);
 
         Despensa despensa = new Despensa(despensableMap);
 

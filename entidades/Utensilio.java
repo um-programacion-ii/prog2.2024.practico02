@@ -40,9 +40,9 @@ public class Utensilio implements Despensable, Reutilizable {
         if (this.vidaUtil >= cantidad){
             this.vidaUtil -= cantidad;
         }else{
-//        throw new VidaUtilInsuficienteException("No hay suficientes usos de " + this.nombre);
-//    }
-            throw new VidaUtilInsuficienteException("No hay suficientes usos \n Faltan " + (cantidad - this.vidaUtil) + " usos de " + this.nombre);
+
+            throw new VidaUtilInsuficienteException("No hay suficientes usos de "+ this.nombre +
+                    " \n Faltan " + (cantidad - this.vidaUtil) + " usos" );
         }
     }
 
