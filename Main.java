@@ -31,6 +31,7 @@ public class Main {
         Utensilio tenedor = new Utensilio("Tenedor", 100);
         Utensilio cucharon = new Utensilio("Cucharon", 100);
         Utensilio olla = new Utensilio("Olla", 100);
+//        Utensilio espatula = new Utensilio("Espatula", 100);
 
         Map<String, Despensable> despensableMap= new HashMap<>();
         despensableMap.put(huevo.getNombre(), huevo);
@@ -50,6 +51,7 @@ public class Main {
         despensableMap.put(tenedor.getNombre(), tenedor);
         despensableMap.put(cucharon.getNombre(), cucharon);
         despensableMap.put(olla.getNombre(), olla);
+//        despensableMap.put(espatula.getNombre(), espatula);
 
         Despensa despensa = new Despensa(despensableMap);
 
@@ -77,31 +79,6 @@ public class Main {
         cocinaService.prepararPlatos(torta);
 
 
-
-
-
-
-////        Despensa despensa = new Despensa(ingredientes, utensilios);
-//
-//        Chef chef = new Chef("Gordon Ramsay", 50);
-//
-//        CocinaService cocinaService = new CocinaService(chef, despensa);
-//
-//        Torta torta = new Torta();
-//        HuevoDuro huevoDuro = new HuevoDuro();
-//        HuevoFrito huevoFrito = new HuevoFrito();
-//
-//        cocinaService.prepararPlatos(torta);
-//        System.out.println("-------------------------------------------------");
-//        cocinaService.prepararPlatos(huevoDuro);
-//        System.out.println("-------------------------------------------------");
-//        cocinaService.prepararPlatos(huevoFrito);
-
-
-
-
-
-
     }
 
 
@@ -115,5 +92,5 @@ public class Main {
 
 
 
-    }
+}
 

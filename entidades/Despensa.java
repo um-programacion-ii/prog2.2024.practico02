@@ -3,8 +3,7 @@ package entidades;
 import interfaces.Cocinable;
 import interfaces.Despensable;
 
-import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 public class Despensa implements Cocinable {
@@ -28,6 +27,12 @@ public class Despensa implements Cocinable {
         Despensable despensaItem = despensableMap.get(despensable.getNombre());
         return despensaItem != null && despensaItem.getCantidadDisponible() >= despensable.getCantidadDisponible();
     }
+
+    public int getCantidadDisponible(String nombreDespensable) {
+        Despensable despensable = despensableMap.get(nombreDespensable);
+        return despensable != null ? despensable.getCantidadDisponible() : 0;
+    }
+
 }
 
 

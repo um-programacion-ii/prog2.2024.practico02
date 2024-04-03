@@ -3,6 +3,9 @@ package services;
 import entidades.*;
 import interfaces.Despensable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CocinaService {
 
     private Chef chef;
@@ -15,22 +18,56 @@ public class CocinaService {
         this.despensa = despensa;
     }
 
-    public void prepararPlatos(Receta receta) {
+public void prepararPlatos(Receta receta){
+    List<Despensable> ingredientes = receta.getIngredientes();
+    List<Despensable> utensilios = receta.getUtensilios();
+    boolean suficientesIngredientes = true;
+    boolean suficientesUtensilios = true;
 
-        if (verificarDisponibilidad(receta)) {
-            // Sacar los ingredientes y utensilios de la despensa
-            for (Despensable ingrediente : receta.getIngredientes()) {
-                despensa.sacar(ingrediente.getNombre(), ingrediente.getCantidadDisponible());
-            }
-            for (Despensable utensilio : receta.getUtensilios()) {
-                despensa.sacar(utensilio.getNombre(), utensilio.getCantidadDisponible());
-            }
-            // Preparar la receta
-            System.out.println("El Chef " + chef.getNombre() + " ha preparado exitosamente la receta: " + receta.getClass().getSimpleName());
-        } else {
-            System.out.println("No hay suficientes ingredientes o utensilios en la despensa para preparar la receta: " + receta.getClass().getSimpleName());
+    List<Despensable> faltantesIngredientes = new ArrayList<>();
+    List<Despensable> faltantesUtensilios = new ArrayList<>();
+
+    for(Despensable ingrediente : ingredientes){
+        if (!despensa.contieneSuficienteDespensable(ingrediente)) {
+            suficientesIngredientes = false;
+            faltantesIngredientes.add(ingrediente);
         }
     }
+    for(Despensable utensilio : utensilios){
+        if (!despensa.contieneSuficienteDespensable(utensilio)) {
+            suficientesUtensilios = false;
+            faltantesUtensilios.add(utensilio);
+        }
+    }
+
+    if (suficientesIngredientes && suficientesUtensilios) {
+        // Preparar la receta
+        for (Despensable ingrediente : ingredientes) {
+            despensa.sacar(ingrediente.getNombre(), ingrediente.getCantidadDisponible());
+        }
+        for (Despensable utensilio : utensilios) {
+            despensa.sacar(utensilio.getNombre(), utensilio.getCantidadDisponible());
+        }
+        System.out.println("El Chef " + chef.getNombre() + " ha preparado exitosamente la receta: " + receta.getClass().getSimpleName());
+    } else {
+        System.out.println("No hay suficientes ingredientes o utensilios en la despensa para preparar la receta: " + receta.getClass().getSimpleName());
+        if (!faltantesIngredientes.isEmpty()) {
+            System.out.println("Ingredientes faltantes:");
+            for (Despensable ingrediente : faltantesIngredientes) {
+                int cantidadFaltante = ingrediente.getCantidadDisponible() - despensa.getCantidadDisponible(ingrediente.getNombre());
+                System.out.println("- " + ingrediente.getNombre() + ": faltan " + cantidadFaltante);
+            }
+        }
+        if (!faltantesUtensilios.isEmpty()) {
+            System.out.println("Utensilios faltantes:");
+            for (Despensable utensilio : faltantesUtensilios) {
+                int cantidadFaltante = utensilio.getCantidadDisponible() - despensa.getCantidadDisponible(utensilio.getNombre());
+                System.out.println("- " + utensilio.getNombre() + ": faltan " + cantidadFaltante);
+            }
+        }
+    }
+}
+
 
     private boolean verificarDisponibilidad(Receta receta) {
         // Verificar si hay suficientes ingredientes y utensilios en la despensa
@@ -46,39 +83,6 @@ public class CocinaService {
         }
         return true;
     }
-
-//    public void prepararPlatos(Receta receta){
-//        Ingrediente[] ingredientes = receta.getIngredientes();
-//        Utensilio[] utensilios = receta.getUtensilios();
-//        boolean suficientesIngredientes = true;
-//        boolean suficientesUtensilios = true;
-//        for(Ingrediente ingrediente : ingredientes){
-//            if (!despensa.contieneSuficienteIngrediente(ingrediente)) {
-//                suficientesIngredientes = false;
-//                System.out.println("No hay suficiente " + ingrediente.getNombre() + " en la despensa.");
-//                System.out.println("Faltan " + (ingrediente.getCantidad() - despensa.getCantidadIngrediente(ingrediente)) + " unidades.");
-//            }
-//        }
-//        for(Utensilio utensilio : utensilios){
-//            if (!despensa.contieneSuficienteUtensilio(utensilio)) {
-//                suficientesUtensilios = false;
-//                System.out.println("No hay suficientes usos de  " + utensilio.getNombre() + " en la despensa.");
-//                System.out.println("Faltan " + (utensilio.getUsos() - despensa.getCantidadUtensilio(utensilio)) + " usos.");
-//            }
-//        }
-//        if (suficientesIngredientes && suficientesUtensilios) {
-//            // Preparar la receta
-//            for (Ingrediente ingrediente : ingredientes) {
-//                despensa.sacarIngrediente(ingrediente);
-//            }
-//            for (Utensilio utensilio : utensilios) {
-//                despensa.sacarUtensilio(utensilio);
-//            }
-//            System.out.println("La Receta preparada correctamente por el Chef " + chef.getNombre());
-//        } else {
-//            System.out.println("El Chef " + chef.getNombre() + " no pudo preparar la receta debido a la falta de ingredientes.");
-//        }
-//    }
 }
 
 
