@@ -13,7 +13,7 @@ public class HuevoDuro extends Receta {
                     add(new Ingrediente("Huevo", 1));
                 }},
                 new ArrayList<>() {{
-                    add(new Utensilio("Olla", 1));
+                    add(new Utensilio("Olla", 10));
                 }},
                 "Poner el huevo en agua hirviendo durante 10 minutos"
         );

@@ -19,9 +19,9 @@ public class Torta extends Receta {
                         add(new Ingrediente("Polvo de hornear", 25));
                     }},
                     new ArrayList<>() {{
-                        add(new Utensilio("Bowl", 1));
-                        add(new Utensilio("Batidora", 1));
-                        add(new Utensilio("Horno", 1));
+                        add(new Utensilio("Bowl", 10));
+                        add(new Utensilio("Batidora", 25));
+                        add(new Utensilio("Horno", 25));
                     }},
                     "Mezclar los ingredientes, empezamos por mezclar los liquidos y luego ingresamos los secos, tamizados previamente. Y hornear durante 30 minutos"
             );

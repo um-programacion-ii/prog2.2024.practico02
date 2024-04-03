@@ -16,8 +16,8 @@ public class HuevoFrito extends Receta {
                     add(new Ingrediente("Aceite", 50));
                 }},
                 new ArrayList<>() {{
-                    add(new Utensilio("Sarten", 1));
-                    add(new Utensilio("Espatula", 1));
+                    add(new Utensilio("Sarten", 10));
+                    add(new Utensilio("Espatula", 5));
                 }},
                 "Poner el aceite en la sarten, esperar a que caliente y poner el huevo, cocinar durante 3 minutos"
         );

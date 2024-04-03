@@ -1,8 +1,9 @@
 package entidades;
 
 import interfaces.Despensable;
+import interfaces.Reutilizable;
 
-public class Utensilio implements Despensable {
+public class Utensilio implements Despensable, Reutilizable {
 
     private String nombre;
     private int vidaUtil;
@@ -24,7 +25,7 @@ public class Utensilio implements Despensable {
     public int getCantidadDisponible() {
         return vidaUtil;
     }
-
+    @Override
     public void setVidaUtil(int vidaUtil) {
         this.vidaUtil = vidaUtil;
     }

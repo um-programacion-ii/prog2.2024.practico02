@@ -62,27 +62,12 @@ public void prepararPlatos(Receta receta){
             System.out.println("Utensilios faltantes:");
             for (Despensable utensilio : faltantesUtensilios) {
                 int cantidadFaltante = utensilio.getCantidadDisponible() - despensa.getCantidadDisponible(utensilio.getNombre());
-                System.out.println("- " + utensilio.getNombre() + ": faltan " + cantidadFaltante);
+                System.out.println("- " + utensilio.getNombre());
             }
         }
     }
 }
 
-
-    private boolean verificarDisponibilidad(Receta receta) {
-        // Verificar si hay suficientes ingredientes y utensilios en la despensa
-        for (Despensable ingrediente : receta.getIngredientes()) {
-            if (!despensa.contieneSuficienteDespensable(ingrediente)) {
-                return false;
-            }
-        }
-        for (Despensable utensilio : receta.getUtensilios()) {
-            if (!despensa.contieneSuficienteDespensable(utensilio)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
 
 
