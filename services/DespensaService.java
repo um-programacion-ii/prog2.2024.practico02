@@ -29,4 +29,18 @@ public class DespensaService {
         }
          return true;
     }
+
+
+
+
+
+//    Acá se puede ver que se está utilizando el método allMatch de la clase Stream, que recibe un predicado y devuelve un booleano.
+//public boolean verificarStock(List<Despensable> ingredientes) {
+//    return ingredientes.stream().allMatch(ingrediente -> despensa.contieneSuficienteDespensable(ingrediente));
+//}
+//
+//    public boolean verificarVidaUtil(List<Despensable> utensilios) {
+//        return utensilios.stream().allMatch(utensilio -> despensa.contieneSuficienteDespensable(utensilio));
+//    }
+
 }
