@@ -2,10 +2,14 @@ import entidades.Chef;
 import entidades.Despensa;
 import entidades.Ingrediente;
 import entidades.Utensilio;
+import interfaces.Despensable;
 import recetas.HuevoDuro;
 import recetas.HuevoFrito;
 import recetas.Torta;
 import services.CocinaService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,12 +32,28 @@ public class Main {
         Utensilio cucharon = new Utensilio("Cucharon", 100);
         Utensilio olla = new Utensilio("Olla", 100);
 
-        Ingrediente[] ingredientes = {huevo, harina, azucar, sal, aceite, agua, leche, manteca};
-        Utensilio[] utensilios = {bowl, batidora, horno, sarten, cuchara, cuchillo, tenedor, cucharon, olla};
+        Map<String, Despensable> despensableMap= new HashMap<>();
+        despensableMap.put(huevo.getNombre(), huevo);
+        despensableMap.put(harina.getNombre(), harina);
+        despensableMap.put(azucar.getNombre(), azucar);
+        despensableMap.put(sal.getNombre(), sal);
+        despensableMap.put(aceite.getNombre(), aceite);
+        despensableMap.put(agua.getNombre(), agua);
+        despensableMap.put(leche.getNombre(), leche);
+        despensableMap.put(manteca.getNombre(), manteca);
+        despensableMap.put(bowl.getNombre(), bowl);
+        despensableMap.put(batidora.getNombre(), batidora);
+        despensableMap.put(horno.getNombre(), horno);
+        despensableMap.put(sarten.getNombre(), sarten);
+        despensableMap.put(cuchara.getNombre(), cuchara);
+        despensableMap.put(cuchillo.getNombre(), cuchillo);
+        despensableMap.put(tenedor.getNombre(), tenedor);
+        despensableMap.put(cucharon.getNombre(), cucharon);
+        despensableMap.put(olla.getNombre(), olla);
 
-        Despensa despensa = new Despensa(ingredientes, utensilios);
+        Despensa despensa = new Despensa(despensableMap);
 
-        Chef chef = new Chef("Gordon Ramsay", 50);
+        Chef chef = new Chef("Gordon Ramsay", 3);
 
         CocinaService cocinaService = new CocinaService(chef, despensa);
 
@@ -41,11 +61,41 @@ public class Main {
         HuevoDuro huevoDuro = new HuevoDuro();
         HuevoFrito huevoFrito = new HuevoFrito();
 
-        cocinaService.prepararPlatos(torta);
-        System.out.println("-------------------------------------------------");
+        System.out.println("------------------------------------------");
+
+        System.out.println("Preparación de huevo duro:");
         cocinaService.prepararPlatos(huevoDuro);
-        System.out.println("-------------------------------------------------");
+
+        System.out.println("------------------------------------------");
+
+        System.out.println("Preparación de huevo frito:");
         cocinaService.prepararPlatos(huevoFrito);
+
+        System.out.println("------------------------------------------");
+
+        System.out.println("Preparación de torta:");
+        cocinaService.prepararPlatos(torta);
+
+
+
+
+
+
+////        Despensa despensa = new Despensa(ingredientes, utensilios);
+//
+//        Chef chef = new Chef("Gordon Ramsay", 50);
+//
+//        CocinaService cocinaService = new CocinaService(chef, despensa);
+//
+//        Torta torta = new Torta();
+//        HuevoDuro huevoDuro = new HuevoDuro();
+//        HuevoFrito huevoFrito = new HuevoFrito();
+//
+//        cocinaService.prepararPlatos(torta);
+//        System.out.println("-------------------------------------------------");
+//        cocinaService.prepararPlatos(huevoDuro);
+//        System.out.println("-------------------------------------------------");
+//        cocinaService.prepararPlatos(huevoFrito);
 
 
 

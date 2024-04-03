@@ -1,40 +1,36 @@
 package entidades;
+import interfaces.Despensable;
+
+import java.util.List;
 
 public class Receta {
     private int tiempoCoccion;
-    private Ingrediente[] ingredientes;
 
-    private Utensilio[] utensilios;
-
+    private List<Despensable> ingredientes;
+    private List<Despensable> utensilios;
     private String preparacion;
 
-    public Receta(int tiempoCoccion, Ingrediente[] ingredientes,Utensilio[] utensilios, String preparacion) {
+    public Receta(int tiempoCoccion, List<Despensable> ingredientes, List<Despensable> utensilios, String preparacion) {
         this.tiempoCoccion = tiempoCoccion;
         this.ingredientes = ingredientes;
         this.utensilios = utensilios;
         this.preparacion = preparacion;
     }
 
-    public void mostrarReceta(){
-        System.out.println("Tiempo de coccion: " + tiempoCoccion);
-        System.out.println("Ingredientes: ");
-        for (int i = 0; i < ingredientes.length; i++) {
-            System.out.println(ingredientes[i].toString());
-        }
-        System.out.println("Utensilios: ");
-        for (int i = 0; i < utensilios.length; i++) {
-            System.out.println(utensilios[i].toString());
-        }
-        System.out.println("Preparacion: " + preparacion);
+    public int getTiempoCoccion() {
+        return tiempoCoccion;
     }
 
-
-    public Ingrediente[] getIngredientes() {
+    public List<Despensable> getIngredientes() {
         return ingredientes;
     }
 
-    public Utensilio[] getUtensilios() {
+    public List<Despensable> getUtensilios() {
         return utensilios;
+    }
+
+    public String getPreparacion() {
+        return preparacion;
     }
 
 //    public void setIngredientes(entidades.Ingrediente[] ingredientes) {

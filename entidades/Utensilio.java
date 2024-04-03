@@ -5,14 +5,14 @@ import interfaces.Despensable;
 public class Utensilio implements Despensable {
 
     private String nombre;
-    private int usos;
+    private int vidaUtil;
 
-    public Utensilio(String nombre, int usos) {
+    public Utensilio(String nombre, int vidaUtil) {
         this.nombre = nombre;
-        this.usos = usos;
+        this.vidaUtil = vidaUtil;
     }
 
-
+    @Override
     public String getNombre() {
         return nombre;
     }
@@ -20,26 +20,26 @@ public class Utensilio implements Despensable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public int getUsos() {
-        return usos;
+    @Override
+    public int getCantidadDisponible() {
+        return vidaUtil;
     }
 
-    public void setUsos(int usos) {
-        this.usos = usos;
+    public void setVidaUtil(int vidaUtil) {
+        this.vidaUtil = vidaUtil;
     }
 
     public String toString(){
-        return("Utensilio: " + nombre + " con " + usos + " usos");
+        return("Utensilio: " + nombre + " con " + vidaUtil + " usos");
     }
 
     @Override
     public void sacar(int cantidad) {
-        if (this.usos >= cantidad){
-            this.usos -= cantidad;
+        if (this.vidaUtil >= cantidad){
+            this.vidaUtil -= cantidad;
         }else{
             System.out.println("No hay suficientes usos");
-            System.out.println("Faltan " + (cantidad - this.usos) + " usos de " + this.nombre);
+            System.out.println("Faltan " + (cantidad - this.vidaUtil) + " usos de " + this.nombre);
         }
     }
 

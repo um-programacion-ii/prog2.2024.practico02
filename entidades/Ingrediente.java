@@ -17,9 +17,9 @@ public Ingrediente(String nombre, int cantidad) {
 
     @Override
     public String toString() {
-        return "entidades.Ingrediente{" + "nombre=" + nombre + ", cantidad=" + cantidad + '}';
+        return "Ingrediente{" + "nombre=" + nombre + ", cantidad=" + cantidad + '}';
     }
-
+    @Override
     public String getNombre() {
         return nombre;
     }
@@ -27,8 +27,8 @@ public Ingrediente(String nombre, int cantidad) {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public int getCantidad() {
+    @Override
+    public int getCantidadDisponible() {
         return cantidad;
     }
 
