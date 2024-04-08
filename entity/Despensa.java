@@ -3,37 +3,54 @@ package entity;
 import entity.customExceptions.InvalidIngredientException;
 import entity.customExceptions.NotEnoughStockException;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 public class Despensa {
-    private Ingrediente[] ingredientes;
+    private Map<String, Ingrediente> ingredientes;
+    private Map<String, Ingrediente> utensilios;
 
     public Despensa() {
-        this.ingredientes = new Ingrediente[0];
+        this.utensilios = new HashMap<>();
+        this.ingredientes = new HashMap<>();
     }
 
-    public Despensa(Ingrediente[] ingredientes) {
+    public Despensa(Map<String, Ingrediente> ingredientes, Map<String, Ingrediente> utensilios) {
         this.ingredientes = ingredientes;
+        this.utensilios = utensilios;
     }
 
-    public Ingrediente[] getIngredientes() {
+    public Map<String, Ingrediente> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(Ingrediente[] ingredientes) {
+    public void setIngredientes(Map<String, Ingrediente> ingredientes) {
         this.ingredientes = ingredientes;
+    }
+
+    public Map<String, Ingrediente> getUtensilios() {
+        return utensilios;
+    }
+
+    public void setUtensilios(Map<String, Ingrediente> utensilios) {
+        this.utensilios = utensilios;
     }
 
     @Override
     public String toString() {
-        return "Ingredientes en despensa:" + this.showIngredientes();
+        return "\nIngredientes en despensa:" + this.showItems(this.ingredientes)+"\nUtensilios en despensa:" + this.showItems(this.utensilios);
     }
 
-    public StringBuilder showIngredientes() {
+    private StringBuilder showItems(Map<String, Despensable> despensableMap) {
         StringBuilder ingredientes = new StringBuilder();
-        for (int counter = 0; counter < this.ingredientes.length; counter++) {
-            if (counter < this.ingredientes.length-1) {
-                ingredientes.append("\n").append(this.ingredientes[counter]).append(", ");
+        Iterator<Map.Entry<String, Ingrediente>> iterator = this.ingredientes.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Ingrediente> entry = iterator.next();
+            if (iterator.hasNext()) {
+                ingredientes.append("\n").append(entry.getValue()).append(", ");
             } else {
-                ingredientes.append("\n").append(this.ingredientes[counter]);
+                ingredientes.append("\n").append(entry.getValue());
             }
         }
         return ingredientes;
@@ -44,9 +61,9 @@ public class Despensa {
             Ingrediente ingredienteDisp = this.inspectIngrediente(ingrediente.getNombre());
             ingredienteDisp.setCantidad(ingredienteDisp.getCantidad()+ingrediente.getCantidad());
         } catch (InvalidIngredientException e) {
-            Ingrediente[] newIngredientes = new Ingrediente[this.ingredientes.length + 1];
-            System.arraycopy(this.ingredientes, 0, newIngredientes, 0, this.ingredientes.length);
-            newIngredientes[this.ingredientes.length] = ingrediente;
+            Ingrediente[] newIngredientes = new Ingrediente[this.ingredientes.size() + 1];
+            System.arraycopy(this.ingredientes, 0, newIngredientes, 0, this.ingredientes.size());
+            newIngredientes[this.ingredientes.size()] = ingrediente;
             this.ingredientes = newIngredientes;
         }
     }
@@ -68,4 +85,5 @@ public class Despensa {
         }
         throw new InvalidIngredientException("The ingredient "+name+" doesn't exist.");
     }
+
 }

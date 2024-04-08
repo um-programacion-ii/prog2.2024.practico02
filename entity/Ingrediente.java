@@ -2,7 +2,7 @@ package entity;
 
 import entity.customExceptions.NotEnoughStockException;
 
-public class Ingrediente {
+public class Ingrediente implements Despensable, Cocinable {// Cambiar la estructura, que no implememnte dos interfaces sino que implemente una y la otra sea una extension de esa
     private String nombre;
     private Integer cantidad;
 
@@ -35,6 +35,7 @@ public class Ingrediente {
         return nombre + "  Cantidad: "+cantidad;
     }
 
+    @Override
     public String sacar(int amount) throws NotEnoughStockException {
         if (amount <= this.cantidad) {
             this.cantidad = this.cantidad - amount;

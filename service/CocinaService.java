@@ -54,7 +54,7 @@ public class CocinaService {
 
     public String makeReceta(Integer recetaNumber) throws NotEnoughStockException{
         Despensa ingredientesFaltantes = this.verifyAvaReceta(recetaNumber);
-        if (ingredientesFaltantes.getIngredientes().length > 0) {
+        if (!ingredientesFaltantes.getIngredientes().isEmpty()) {
             throw new NotEnoughStockException("Faltan los siguientes ingredientes:  "+ingredientesFaltantes.showIngredientes());
         }
         for (Ingrediente ingrediente: this.recetas[recetaNumber-1].getIngredientes()) {
