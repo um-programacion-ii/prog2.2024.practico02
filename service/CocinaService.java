@@ -2,85 +2,64 @@ package service;
 
 import entity.Despensa;
 import entity.Ingrediente;
-import entity.customExceptions.InvalidIngredientException;
-import entity.customExceptions.NotEnoughStockException;
+import entity.customExceptions.StockInsuficienteException;
+import entity.customExceptions.VidaUtilInsuficienteException;
 import entity.recetas.Receta;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
+
 public class CocinaService {
-    private Despensa despensa;
-    private Receta[] recetas;
+    private Map<String, Receta> recetas;
+    private DespensaService despensaService;
 
     public CocinaService() {
     }
 
-    public CocinaService(Despensa despensa, Receta[] recetas) {
-        this.despensa = despensa;
+    public CocinaService(Despensa despensa, Map<String, Receta> recetas, DespensaService despensaService) {
         this.recetas = recetas;
+        this.despensaService = despensaService;
     }
 
-    public Despensa getDespensa() {
-        return despensa;
-    }
-
-    public void setDespensa(Despensa despensa) {
-        this.despensa = despensa;
-    }
-
-    public Receta[] getRecetas() {
+    public Map<String, Receta> getRecetas() {
         return recetas;
     }
 
-    public void setRecetas(Receta[] recetas) {
+    public void setRecetas(Map<String, Receta> recetas) {
         this.recetas = recetas;
+    }
+
+    public DespensaService getDespensaService() {
+        return despensaService;
+    }
+
+    public void setDespensaService(DespensaService despensaService) {
+        this.despensaService = despensaService;
     }
 
     @Override
     public String toString() {
-        return "CocinaService: \n" + despensa +
-                ", recetas: " + this.showRecetas();
+        return "CocinaService, " + this.showRecetas() + this.despensaService;
     }
 
     public String showRecetas() {
-        StringBuilder recetas = new StringBuilder();
-        for (int counter = 0; counter < this.recetas.length; counter++) {
-            if (counter < this.recetas.length-1) {
-                recetas.append(String.format("\n\n%d- %s, ", counter+1, this.recetas[counter]));
-            } else {
-                recetas.append(String.format("\n\n%d- %s", counter+1, this.recetas[counter]));
-            }
-        }
-        return "recetas: " + recetas;
+        return "recetas: " +this.recetas.values().stream().map(item -> toString()).collect(Collectors.joining("", "\n\n", ""));
     }
 
-    public String makeReceta(Integer recetaNumber) throws NotEnoughStockException{
+    public String makeReceta(String name) throws StockInsuficienteException, VidaUtilInsuficienteException {
         Despensa ingredientesFaltantes = this.verifyAvaReceta(recetaNumber);
         if (!ingredientesFaltantes.getIngredientes().isEmpty()) {
-            throw new NotEnoughStockException("Faltan los siguientes ingredientes:  "+ingredientesFaltantes.showIngredientes());
+            throw new StockInsuficienteException("Faltan los siguientes ingredientes:  "+ingredientesFaltantes.showIngredientes());
         }
         for (Ingrediente ingrediente: this.recetas[recetaNumber-1].getIngredientes()) {
             try {
                 this.despensa.getIngrediente(ingrediente.getNombre(), ingrediente.getCantidad());
             } catch (Exception e) {
-                throw new NotEnoughStockException(e.getMessage());
+                throw new StockInsuficienteException(e.getMessage());
             }
         }
         return this.recetas[recetaNumber-1].getPreparacion();
     }
 
-    private Despensa verifyAvaReceta(Integer recetaNumber) {
-        Receta receta = this.recetas[recetaNumber-1];
-        Despensa ingredientesFaltantes = new Despensa();
-        for (Ingrediente ingrediente: receta.getIngredientes()) {
-            try {
-                Ingrediente ingredienteDisp = this.despensa.inspectIngrediente(ingrediente.getNombre());
-                if (ingredienteDisp.getCantidad() < ingrediente.getCantidad()) {
-                    ingrediente.setCantidad(ingrediente.getCantidad()-ingredienteDisp.getCantidad());
-                    ingredientesFaltantes.addIngrediente(ingrediente);
-                }
-            } catch (InvalidIngredientException e) {
-                ingredientesFaltantes.addIngrediente(ingrediente);
-            }
-        }
-        return ingredientesFaltantes;
-    }
 }

@@ -2,7 +2,7 @@ package service;
 
 import entity.Chef;
 import entity.Ingrediente;
-import entity.customExceptions.NotEnoughStockException;
+import entity.customExceptions.StockInsuficienteException;
 import entity.Despensa;
 import entity.recetas.*;
 
@@ -34,7 +34,7 @@ public class Main {
             System.out.println(ingredientes[4]);
             System.out.println("Sacar 3 huevos");
             ingredientes[4].sacar(3);
-        } catch (NotEnoughStockException e) {
+        } catch (StockInsuficienteException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("\nCrear despensa e incluir los ingredientes:");

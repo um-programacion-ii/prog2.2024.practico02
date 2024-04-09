@@ -1,9 +1,15 @@
 package entity;
 
-import entity.customExceptions.NotEnoughStockException;
-import entity.customExceptions.NotEnoughUseTimeException;
+import entity.customExceptions.VidaUtilInsuficienteException;
 
-public interface Reutilizable {
+public interface Reutilizable extends Despensable{
 
-    public String usar(int time) throws NotEnoughStockException, NotEnoughUseTimeException;
+    public void use(int time) throws VidaUtilInsuficienteException;
+
+    public void renew(int usageTime);
+
+    public String getNombre();
+
+    public Integer getVidaUtil();
+
 }

@@ -1,8 +1,14 @@
 package entity;
 
-import entity.customExceptions.NotEnoughStockException;
+import entity.customExceptions.StockInsuficienteException;
 
-public interface Cocinable {
+public interface Cocinable extends Despensable{
 
-    public String sacar(int amount) throws NotEnoughStockException;
+    public void sacar(int amount) throws StockInsuficienteException;
+
+    public void restock(int amount);
+
+    public String getNombre();
+
+    public Integer getCantidad();
 }

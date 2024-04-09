@@ -1,24 +1,22 @@
 package entity;
 
-import entity.customExceptions.NotEnoughStockException;
-import entity.customExceptions.NotEnoughUseTimeException;
+import entity.customExceptions.VidaUtilInsuficienteException;
 
-public class Utensilio implements Despensable, Reutilizable{
+public class Utensilio implements Reutilizable {
     private String nombre;
-    private Integer cantidad;
     private Integer vidaUtil;
-    private Integer remUsageTime;
+    private Integer vidaUtilInicial;
 
     public Utensilio() {
     }
 
-    public Utensilio(String nombre, Integer cantidad, Integer vidaUtil) {
+    public Utensilio(String nombre, Integer vidaUtil) {
         this.nombre = nombre;
-        this.cantidad = cantidad;
         this.vidaUtil = vidaUtil;
-        this.remUsageTime = vidaUtil;
+        this.vidaUtilInicial = vidaUtil;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
@@ -27,14 +25,7 @@ public class Utensilio implements Despensable, Reutilizable{
         this.nombre = nombre;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
+    @Override
     public Integer getVidaUtil() {
         return vidaUtil;
     }
@@ -43,34 +34,30 @@ public class Utensilio implements Despensable, Reutilizable{
         this.vidaUtil = vidaUtil;
     }
 
-    public Integer getRemUsageTime() {
-        return remUsageTime;
+    public Integer getVidaUtilInicial() {
+        return vidaUtilInicial;
     }
 
-    public void setRemUsageTime(Integer remUsageTime) {
-        this.remUsageTime = remUsageTime;
+    public void setVidaUtilInicial(Integer vidaUtilInicial) {
+        this.vidaUtilInicial = vidaUtilInicial;
     }
 
     @Override
     public String toString() {
-        return nombre + "  Cantidad: "+cantidad+"  Vida útil: "+vidaUtil;
+        return nombre + "  Vida útil: "+vidaUtil;
     }
 
     @Override
-    public String usar(int usageTime) throws NotEnoughStockException, NotEnoughUseTimeException {
-        while (true) {
-            if (usageTime > this.vidaUtil) {
-                this.vidaUtil -= usageTime;
-                return String.format("Remaining units: %d, remaining usage time: %d", this.cantidad, this.vidaUtil);
-            } else if (this.cantidad > 0) {
-                usageTime -= this.remUsageTime;
-                this.cantidad -= 1;
-                this.remUsageTime = this.vidaUtil;
-            } else if ()
-
-            } else {
-                throw new NotEnoughUseTimeException(String.format("Not enough remaining usage time of %s", this.nombre));
-            }
+    public void use(int usageTime) throws VidaUtilInsuficienteException {
+        if (usageTime > this.vidaUtil) {
+            this.vidaUtil -= usageTime;
+        } else {
+            throw new VidaUtilInsuficienteException(String.format("Not enough remaining usage time of %s", this.nombre));
         }
+    }
+
+    @Override
+    public void renew(int usageTime) {
+        this.vidaUtil = this.vidaUtilInicial;
     }
 }

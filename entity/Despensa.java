@@ -1,40 +1,39 @@
 package entity;
 
 import entity.customExceptions.InvalidIngredientException;
-import entity.customExceptions.NotEnoughStockException;
+import entity.customExceptions.StockInsuficienteException;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Despensa {
-    private Map<String, Despensable> ingredientes;
-    private Map<String, Despensable> utensilios;
+    private Map<String, Cocinable> ingredientes;
+    private Map<String, Reutilizable> utensilios;
 
     public Despensa() {
         this.utensilios = new HashMap<>();
         this.ingredientes = new HashMap<>();
     }
 
-    public Despensa(Map<String, Despensable> ingredientes, Map<String, Despensable> utensilios) {
+    public Despensa(Map<String, Cocinable> ingredientes, Map<String, Reutilizable> utensilios) {
         this.ingredientes = ingredientes;
         this.utensilios = utensilios;
     }
 
-    public Map<String, Despensable> getIngredientes() {
+    public Map<String, Cocinable> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(Map<String, Despensable> ingredientes) {
+    public void setIngredientes(Map<String, Cocinable> ingredientes) {
         this.ingredientes = ingredientes;
     }
 
-    public Map<String, Despensable> getUtensilios() {
+    public Map<String, Reutilizable> getUtensilios() {
         return utensilios;
     }
 
-    public void setUtensilios(Map<String, Despensable> utensilios) {
+    public void setUtensilios(Map<String, Reutilizable> utensilios) {
         this.utensilios = utensilios;
     }
 
@@ -43,48 +42,31 @@ public class Despensa {
         return "\nIngredientes en despensa:" + this.showItems(this.ingredientes)+"\nUtensilios en despensa:" + this.showItems(this.utensilios);
     }
 
-    private StringBuilder showItems(Map<String, Despensable> despensableMap) {
-        //ingredientesStr = despensableMap.values().stream().map(Object -> "\n"+Object+", ").forEach(item -> {});
-        StringBuilder despensables = new StringBuilder();
-        Iterator<Map.Entry<String, Despensable>> iterator = this.despensables.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, Despensable> entry = iterator.next();
-            if (iterator.hasNext()) {
-                despensables.append("\n").append(entry.getValue()).append(", ");
-            } else {
-                despensables.append("\n").append(entry.getValue());
-            }
-        } return despensables;
+    public String showItems(Map<String, ? extends Despensable> despensableMap) {
+        return despensableMap.values().stream().map(item -> toString()).collect(Collectors.joining(", ", "\n", ""));
     }
 
-    public void addIngrediente(Ingrediente ingrediente) {
+    public void addIngrediente(Cocinable ingrediente) {
         try {
-            Ingrediente ingredienteDisp = this.inspectIngrediente(ingrediente.getNombre());
-            ingredienteDisp.setCantidad(ingredienteDisp.getCantidad()+ingrediente.getCantidad());
+            Cocinable existingIngrediente = this.inspectIngrediente(ingrediente.getNombre());
+            existingIngrediente.restock(ingrediente.getCantidad());
         } catch (InvalidIngredientException e) {
-            Ingrediente[] newIngredientes = new Ingrediente[this.ingredientes.size() + 1];
-            System.arraycopy(this.ingredientes, 0, newIngredientes, 0, this.ingredientes.size());
-            newIngredientes[this.ingredientes.size()] = ingrediente;
-            this.ingredientes = newIngredientes;
+            this.ingredientes.put(ingrediente.getNombre(), ingrediente);
         }
     }
 
-    public String getIngrediente(String name, int amount) throws NotEnoughStockException, InvalidIngredientException {
-        for (Ingrediente ingrediente : ingredientes) {
-            if (ingrediente.getNombre().trim().equalsIgnoreCase(name.trim())) {
-                return ingrediente.sacar(amount);
-            }
-        }
-        throw new InvalidIngredientException("The ingredient doesn't exist.");
+    public void getIngrediente(String name, int amount) throws StockInsuficienteException, InvalidIngredientException {
+        Cocinable ingrediente = this.inspectIngrediente(name);
+        ingrediente.sacar(amount);
     }
 
-    public Ingrediente inspectIngrediente(String name) throws InvalidIngredientException {
-        for (Ingrediente ingrediente : ingredientes) {
-            if (ingrediente.getNombre().trim().equalsIgnoreCase(name.trim())) {
-                return ingrediente;
-            }
+    public Cocinable inspectIngrediente(String name) throws InvalidIngredientException {
+        Cocinable ingrediente = this.ingredientes.get(name.trim().toLowerCase());
+        if (ingrediente != null) {
+            return ingrediente;
+        } else {
+            throw new InvalidIngredientException("The ingredient "+name+" doesn't exist.");
         }
-        throw new InvalidIngredientException("The ingredient "+name+" doesn't exist.");
     }
 
 }

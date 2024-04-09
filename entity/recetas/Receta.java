@@ -1,10 +1,16 @@
 package entity.recetas;
 
-import entity.Ingrediente;
+import com.sun.jdi.request.StepRequest;
+import entity.*;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class Receta {
     protected Integer tiempoCoccion;
-    protected Ingrediente[] ingredientes;
+    protected Map<String, Cocinable> ingredientes;
+    protected Map<String, Reutilizable> utensilios;
     protected String preparacion;
 
     public Integer getTiempoCoccion() {
@@ -15,12 +21,20 @@ public abstract class Receta {
         this.tiempoCoccion = tiempoCoccion;
     }
 
-    public Ingrediente[] getIngredientes() {
+    public Map<String, Cocinable> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(Ingrediente[] ingredientes) {
+    public void setIngredientes(Map<String, Cocinable> ingredientes) {
         this.ingredientes = ingredientes;
+    }
+
+    public Map<String, Reutilizable> getUtensilios() {
+        return utensilios;
+    }
+
+    public void setUtensilios(Map<String, Reutilizable> utensilios) {
+        this.utensilios = utensilios;
     }
 
     public String getPreparacion() {
@@ -33,22 +47,21 @@ public abstract class Receta {
 
     @Override
     public String toString() {
-        StringBuilder ingredientes = new StringBuilder();
-        for (int counter = 0; counter < this.ingredientes.length; counter++) {
-            if (counter < this.ingredientes.length-1) {
-                ingredientes.append("\n").append(this.ingredientes[counter]).append(", ");
-            } else {
-                ingredientes.append("\n").append(this.ingredientes[counter]);
-            }
-        }
         return this.getClass().getSimpleName()+", tiempoCoccion: " + tiempoCoccion +" m"+
-                ", ingredientes:" + ingredientes +
+                ", ingredientes:" + this.showItems(this.ingredientes) +
+                ", \nutensilios: "+this.showItems(this.utensilios)+
                 ", \npreparacion: " + preparacion;
     }
-    protected void setDefaultIngredients(Object[][] ingredientes) {
-        this.ingredientes = new Ingrediente[ingredientes.length];
-        for (int counter = 0; counter < this.ingredientes.length; counter++) {
-            this.ingredientes[counter] = new Ingrediente((String) ingredientes[counter][0], (Integer) ingredientes[counter][1]);
-        }
+
+    private String showItems(Map<String, ? extends Despensable> itemsMap) {
+        return itemsMap.values().stream().map(item -> toString()).collect(Collectors.joining(", ", "\n", ""));
+    }
+
+    protected void setDefaultIngredientes(Object[][] ingredientes) {
+        this.ingredientes = Arrays.stream(ingredientes).map(item -> new Ingrediente((String) item[0], (Integer) item[1])).collect(Collectors.toMap(Ingrediente::getNombre, Function.identity()));
+    }
+
+    protected void setDefaultUtensilios(Object[][] utensilios) {
+        this.utensilios = Arrays.stream(utensilios).map(item -> new Utensilio((String) item[0], (Integer) item[1])).collect(Collectors.toMap(Utensilio::getNombre, Function.identity()));
     }
 }

@@ -1,8 +1,8 @@
 package entity;
 
-import entity.customExceptions.NotEnoughStockException;
+import entity.customExceptions.StockInsuficienteException;
 
-public class Ingrediente implements Despensable, Cocinable {// Cambiar la estructura, que no implememnte dos interfaces sino que implemente una y la otra sea una extension de esa
+public class Ingrediente implements Cocinable {
     private String nombre;
     private Integer cantidad;
 
@@ -14,6 +14,7 @@ public class Ingrediente implements Despensable, Cocinable {// Cambiar la estruc
         this.cantidad = cantidad;
     }
 
+    @Override
     public String getNombre() {
         return nombre;
     }
@@ -22,6 +23,7 @@ public class Ingrediente implements Despensable, Cocinable {// Cambiar la estruc
         this.nombre = nombre;
     }
 
+    @Override
     public Integer getCantidad() {
         return cantidad;
     }
@@ -36,12 +38,17 @@ public class Ingrediente implements Despensable, Cocinable {// Cambiar la estruc
     }
 
     @Override
-    public String sacar(int amount) throws NotEnoughStockException {
+    public void sacar(int amount) throws StockInsuficienteException {
         if (amount <= this.cantidad) {
-            this.cantidad = this.cantidad - amount;
-            return String.format("Remaining units: %d", this.cantidad);
+            this.cantidad -= amount;
         } else {
-            throw new NotEnoughStockException("Not enough remaining units of "+this.nombre+", available: "+this.cantidad);
+            throw new StockInsuficienteException("Not enough remaining units of "+this.nombre+", available: "+this.cantidad);
         }
     }
+
+    @Override
+    public void restock(int amount) {
+        this.cantidad += amount;
+    }
+
 }
