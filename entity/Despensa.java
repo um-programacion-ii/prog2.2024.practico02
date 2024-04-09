@@ -6,34 +6,35 @@ import entity.customExceptions.NotEnoughStockException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Despensa {
-    private Map<String, Ingrediente> ingredientes;
-    private Map<String, Ingrediente> utensilios;
+    private Map<String, Despensable> ingredientes;
+    private Map<String, Despensable> utensilios;
 
     public Despensa() {
         this.utensilios = new HashMap<>();
         this.ingredientes = new HashMap<>();
     }
 
-    public Despensa(Map<String, Ingrediente> ingredientes, Map<String, Ingrediente> utensilios) {
+    public Despensa(Map<String, Despensable> ingredientes, Map<String, Despensable> utensilios) {
         this.ingredientes = ingredientes;
         this.utensilios = utensilios;
     }
 
-    public Map<String, Ingrediente> getIngredientes() {
+    public Map<String, Despensable> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(Map<String, Ingrediente> ingredientes) {
+    public void setIngredientes(Map<String, Despensable> ingredientes) {
         this.ingredientes = ingredientes;
     }
 
-    public Map<String, Ingrediente> getUtensilios() {
+    public Map<String, Despensable> getUtensilios() {
         return utensilios;
     }
 
-    public void setUtensilios(Map<String, Ingrediente> utensilios) {
+    public void setUtensilios(Map<String, Despensable> utensilios) {
         this.utensilios = utensilios;
     }
 
@@ -43,17 +44,17 @@ public class Despensa {
     }
 
     private StringBuilder showItems(Map<String, Despensable> despensableMap) {
-        StringBuilder ingredientes = new StringBuilder();
-        Iterator<Map.Entry<String, Ingrediente>> iterator = this.ingredientes.entrySet().iterator();
+        //ingredientesStr = despensableMap.values().stream().map(Object -> "\n"+Object+", ").forEach(item -> {});
+        StringBuilder despensables = new StringBuilder();
+        Iterator<Map.Entry<String, Despensable>> iterator = this.despensables.entrySet().iterator();
         while (iterator.hasNext()) {
-            Map.Entry<String, Ingrediente> entry = iterator.next();
+            Map.Entry<String, Despensable> entry = iterator.next();
             if (iterator.hasNext()) {
-                ingredientes.append("\n").append(entry.getValue()).append(", ");
+                despensables.append("\n").append(entry.getValue()).append(", ");
             } else {
-                ingredientes.append("\n").append(entry.getValue());
+                despensables.append("\n").append(entry.getValue());
             }
-        }
-        return ingredientes;
+        } return despensables;
     }
 
     public void addIngrediente(Ingrediente ingrediente) {
