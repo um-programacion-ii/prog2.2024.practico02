@@ -1,4 +1,3 @@
 package Interfaces;
 
-public interface IReutilizable {
-}
+public interface IReutilizable {}
