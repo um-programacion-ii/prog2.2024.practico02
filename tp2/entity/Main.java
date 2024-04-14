@@ -1,11 +1,13 @@
 package entity;
 
+import excepciones.StockInsuficiente;
+import excepciones.VidaUtilInsuficiente;
 import service.CocinaService;
 
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws VidaUtilInsuficiente, StockInsuficiente {
         Despensa despensa = new Despensa();
 
         Ingrediente agua = new Ingrediente("Agua", 200);
@@ -14,7 +16,7 @@ public class Main {
         Ingrediente sal = new Ingrediente("Sal", 1);
         Ingrediente pimienta = new Ingrediente("Pimienta", 20);
         Ingrediente aceite = new Ingrediente("Aceite", 20);
-        Utensilio olla = new Utensilio("Olla", 1000);
+        Utensilio olla = new Utensilio("Olla", 0);
 
         despensa.agregarIngrediente("Agua", agua);
         despensa.agregarIngrediente("Huevo", huevo);
@@ -30,11 +32,13 @@ public class Main {
 
         // Preparacion de Receta exitosa
         System.out.println("++++++++++++++ Preparacion de receta exitosa ++++++++++++++\n");
-        System.out.println(olla.getVidaUtil());
         CocinaService cocina = new CocinaService(despensa);
-        System.out.println(cocina.cocinar(huevoduro));
+        try {
+            System.out.println(cocina.cocinar(huevoduro));
+        } catch (VidaUtilInsuficiente | StockInsuficiente e) {
+            throw new RuntimeException(e);
+        }
         despensa.imprimirDespensa();
-        System.out.println(olla.getVidaUtil());
         System.out.println("\n");
 
         // Faltan todos los ingredientes

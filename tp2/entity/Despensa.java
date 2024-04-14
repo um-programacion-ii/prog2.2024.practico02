@@ -72,6 +72,9 @@ public class Despensa {
         for (Ingrediente ingrediente : ingredientes.values()) {
             System.out.println(ingrediente.getNombre() + ": " + ingrediente.getCantidad());
         }
+        for(Utensilio utensilio : utensilios.values()) {
+            System.out.println(utensilio.getNombre() + ": " + utensilio.getVidaUtil());
+        }
     }
 
 }

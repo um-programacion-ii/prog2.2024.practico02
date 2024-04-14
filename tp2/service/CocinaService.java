@@ -4,6 +4,8 @@ import entity.Despensa;
 import entity.Ingrediente;
 import entity.Receta;
 import entity.Utensilio;
+import excepciones.StockInsuficiente;
+import excepciones.VidaUtilInsuficiente;
 
 public class CocinaService {
     // El chef utilizará CocinaService para preparar una receta
@@ -14,8 +16,7 @@ public class CocinaService {
 
 
 //    Cocinar
-    public String cocinar(Receta receta)
-    {
+    public String cocinar(Receta receta) throws VidaUtilInsuficiente, StockInsuficiente {
         if(receta.check_ingredients(despensa))
         {
             System.out.println(receta.getPreparacion());
