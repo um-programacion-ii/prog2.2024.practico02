@@ -6,11 +6,27 @@ import java.util.Map;
 
 public class Despensa {
     private Map<String, Ingrediente> ingredientes;
+    private Map<String, Utensilio> utensilios;
 
     public Despensa()
     {
         ingredientes = new HashMap<>();
+        utensilios = new HashMap<>();
     }
+
+    public void agregarUtensilio(String nombre, Utensilio utensilio) {
+        utensilios.put(nombre, utensilio);
+    }
+
+    public String getUtensilio(String nombre, int cantidad_vida_util) {
+        Utensilio utensilio = utensilios.get(nombre);
+        if (utensilio != null) {
+            return utensilio.utilizar(cantidad_vida_util);
+        } else {
+            return "El ingrediente " + nombre + " no se encuentra en la despensa";
+        }
+    }
+
 
     public void agregarIngrediente(String nombre, Ingrediente ingrediente) {
        ingredientes.put(nombre, ingrediente);
@@ -37,6 +53,16 @@ public class Despensa {
         Ingrediente ingrediente = ingredientes.get(nombre);
         if (ingrediente != null) {
             return ingrediente.getCantidad() >= cantidad;
+        }
+        return false;
+    }
+
+    public boolean dispUtensilio(String nombre, int cantidad_vida_util)
+    // Retorna falso si no hay cantidad_vida_util de ingredientes suficientes, o si el ingrediente no se encuentra en la despensa
+    {
+        Utensilio utensilio = utensilios.get(nombre);
+        if (utensilio != null) {
+            return utensilio.getVidaUtil() >= cantidad_vida_util;
         }
         return false;
     }

@@ -14,6 +14,7 @@ public class Main {
         Ingrediente sal = new Ingrediente("Sal", 1);
         Ingrediente pimienta = new Ingrediente("Pimienta", 20);
         Ingrediente aceite = new Ingrediente("Aceite", 20);
+        Utensilio olla = new Utensilio("Olla", 1000);
 
         despensa.agregarIngrediente("Agua", agua);
         despensa.agregarIngrediente("Huevo", huevo);
@@ -21,15 +22,19 @@ public class Main {
         despensa.agregarIngrediente("Sal", sal);
         despensa.agregarIngrediente("Pimienta", pimienta);
         despensa.agregarIngrediente("Aceite", aceite);
+        despensa.agregarUtensilio("Olla", olla);
+
 
         Receta bife = new Bife();
         Receta huevoduro = new HuevoDuro();
 
         // Preparacion de Receta exitosa
         System.out.println("++++++++++++++ Preparacion de receta exitosa ++++++++++++++\n");
+        System.out.println(olla.getVidaUtil());
         CocinaService cocina = new CocinaService(despensa);
         System.out.println(cocina.cocinar(huevoduro));
         despensa.imprimirDespensa();
+        System.out.println(olla.getVidaUtil());
         System.out.println("\n");
 
         // Faltan todos los ingredientes

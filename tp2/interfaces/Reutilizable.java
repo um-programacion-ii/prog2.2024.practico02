@@ -1,5 +1,5 @@
 package interfaces;
 
 public interface Reutilizable {
-    public void utilizar();
+    public String utilizar(int vida_util);
 }

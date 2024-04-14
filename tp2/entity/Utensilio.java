@@ -15,13 +15,31 @@ public class Utensilio implements Despensable, Reutilizable {
         this.vidaUtil = vidaUtil;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getVidaUtil() {
+        return vidaUtil;
+    }
+
+    public void setVidaUtil(int vidaUtil) {
+        this.vidaUtil = vidaUtil;
+    }
+
     @Override
-    public void utilizar() {
-        if (vidaUtil > 0) {
-            vidaUtil--;
-            System.out.println("Utensilio utilizado. Vida útil restante: " + vidaUtil);
+    public String utilizar(int cantidad_vida_util) {
+        if (vidaUtil >= cantidad_vida_util) {
+            vidaUtil = vidaUtil - cantidad_vida_util;
+             return "Utensilio utilizado. Vida útil restante: " + vidaUtil ;
         } else {
-            System.out.println("El utensilio está desgastado y necesita ser reemplazado.");
+            return "El utensilio está desgastado y necesita ser reemplazado.";
         }
     }
+
+
 }

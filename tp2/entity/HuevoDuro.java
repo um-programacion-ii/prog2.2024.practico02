@@ -11,6 +11,9 @@ public class HuevoDuro extends Receta{
                 new ArrayList<Ingrediente>() {{
                     add(new Ingrediente("Huevo", 2));
                     add(new Ingrediente("Agua", 200));
+                }},
+                new ArrayList<Utensilio>() {{
+                    add(new Utensilio("Olla", 1));
                 }});
     }
 
