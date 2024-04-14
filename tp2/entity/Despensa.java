@@ -69,12 +69,8 @@ public class Despensa {
 
     public void imprimirDespensa() {
         System.out.println("Contenido de la despensa:");
-        for (Ingrediente ingrediente : ingredientes.values()) {
-            System.out.println(ingrediente.getNombre() + ": " + ingrediente.getCantidad());
-        }
-        for(Utensilio utensilio : utensilios.values()) {
-            System.out.println(utensilio.getNombre() + ": " + utensilio.getVidaUtil());
-        }
+        ingredientes.values().forEach(ingrediente -> System.out.println(ingrediente.getNombre() + ": " + ingrediente.getCantidad()));
+        utensilios.values().forEach(utensilio -> System.out.println(utensilio.getNombre() + ": " + utensilio.getVidaUtil()));
     }
 
 }
