@@ -2,13 +2,11 @@ package service;
 
 import entity.Cocinable;
 import entity.Despensa;
-import entity.Ingrediente;
 import entity.Reutilizable;
-import entity.customExceptions.InvalidIngredientException;
+import entity.customExceptions.InvalidNameException;
 import entity.customExceptions.InvalidUtensilioException;
 import entity.customExceptions.StockInsuficienteException;
 import entity.customExceptions.VidaUtilInsuficienteException;
-import entity.recetas.Receta;
 
 import java.util.Set;
 
@@ -44,7 +42,7 @@ public class DespensaService {
                     ingrediente.setCantidad(ingrediente.getCantidad()-ingredienteDisp.getCantidad());
                     ingredientesFaltantes.addIngrediente(ingrediente);
                 }
-            } catch (InvalidIngredientException e) {
+            } catch (InvalidNameException e) {
                 ingredientesFaltantes.addIngrediente(ingrediente);
             }
         }
@@ -71,7 +69,8 @@ public class DespensaService {
         }
     }
 
-    public void renovarUtensilios(Reutilizable utensilio) throws InvalidUtensilioException {
-        this.despensa.inspectUtensilio(utensilio.getNombre()).renew();
+    public void renovarUtensilios() {
+        for (Reutilizable utensilio: this.despensa.getUtensilios().values())
+            utensilio.renew();
     }
 }
