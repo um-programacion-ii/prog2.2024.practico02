@@ -10,5 +10,9 @@ public interface Cocinable extends Despensable{
 
     public String getNombre();
 
+    public void setNombre(String nombre);
+
     public Integer getCantidad();
+
+    public void setCantidad(Integer cantidad);
 }

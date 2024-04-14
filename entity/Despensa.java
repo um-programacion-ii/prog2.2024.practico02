@@ -1,6 +1,8 @@
 package entity;
 
 import entity.customExceptions.InvalidIngredientException;
+import entity.customExceptions.InvalidUtensilioException;
+import entity.customExceptions.ObjectAlreadyExistsException;
 import entity.customExceptions.StockInsuficienteException;
 
 import java.util.HashMap;
@@ -55,6 +57,15 @@ public class Despensa {
         }
     }
 
+    public void addUtensilio(Reutilizable utensilio) throws ObjectAlreadyExistsException {
+        try {
+            Reutilizable existingUtensilio = this.inspectUtensilio(utensilio.getNombre());
+            throw new ObjectAlreadyExistsException(String.format("Utensilio %s already exists", utensilio.getNombre()));
+        } catch (InvalidUtensilioException e) {
+            this.utensilios.put(utensilio.getNombre(), utensilio);
+        }
+    }
+
     public void getIngrediente(String name, int amount) throws StockInsuficienteException, InvalidIngredientException {
         Cocinable ingrediente = this.inspectIngrediente(name);
         ingrediente.sacar(amount);
@@ -68,5 +79,13 @@ public class Despensa {
             throw new InvalidIngredientException("The ingredient "+name+" doesn't exist.");
         }
     }
+
+    public Reutilizable inspectUtensilio(String name) throws InvalidUtensilioException {
+        Reutilizable utensilio = this.utensilios.get(name.trim().toLowerCase());
+        if (utensilio != null) {
+            return utensilio;
+        } else {
+            throw new InvalidUtensilioException("The utensil "+name+" doesn't exist.");
+        }
 
 }

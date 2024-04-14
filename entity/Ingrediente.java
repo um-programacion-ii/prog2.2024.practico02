@@ -19,6 +19,7 @@ public class Ingrediente implements Cocinable {
         return nombre;
     }
 
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -28,6 +29,7 @@ public class Ingrediente implements Cocinable {
         return cantidad;
     }
 
+    @Override
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }

@@ -21,6 +21,7 @@ public class Utensilio implements Reutilizable {
         return nombre;
     }
 
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -30,6 +31,7 @@ public class Utensilio implements Reutilizable {
         return vidaUtil;
     }
 
+    @Override
     public void setVidaUtil(Integer vidaUtil) {
         this.vidaUtil = vidaUtil;
     }
@@ -57,7 +59,7 @@ public class Utensilio implements Reutilizable {
     }
 
     @Override
-    public void renew(int usageTime) {
+    public void renew() {
         this.vidaUtil = this.vidaUtilInicial;
     }
 }
