@@ -10,14 +10,16 @@ import excepciones.VidaUtilInsuficiente;
 public class CocinaService {
     // El chef utilizará CocinaService para preparar una receta
     Despensa despensa;
-    public CocinaService(Despensa despensa) {
+    DespensaService despensaService;
+    public CocinaService(Despensa despensa, DespensaService despensaService) {
         this.despensa = despensa;
+        this.despensaService = despensaService;
     }
 
 
 //    Cocinar
     public String cocinar(Receta receta) throws VidaUtilInsuficiente, StockInsuficiente {
-        if(receta.check_ingredients(despensa))
+        if(despensaService.check_ingredients(despensa, receta))
         {
             System.out.println(receta.getPreparacion());
             for(Ingrediente ingrediente_cocinar : receta.getIngredientes())

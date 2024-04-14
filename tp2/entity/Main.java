@@ -3,6 +3,7 @@ package entity;
 import excepciones.StockInsuficiente;
 import excepciones.VidaUtilInsuficiente;
 import service.CocinaService;
+import service.DespensaService;
 
 import java.util.Arrays;
 
@@ -16,7 +17,7 @@ public class Main {
         Ingrediente sal = new Ingrediente("Sal", 1);
         Ingrediente pimienta = new Ingrediente("Pimienta", 20);
         Ingrediente aceite = new Ingrediente("Aceite", 20);
-        Utensilio olla = new Utensilio("Olla", 0);
+        Utensilio olla = new Utensilio("Olla", 100);
 
         despensa.agregarIngrediente("Agua", agua);
         despensa.agregarIngrediente("Huevo", huevo);
@@ -32,12 +33,15 @@ public class Main {
 
         // Preparacion de Receta exitosa
         System.out.println("++++++++++++++ Preparacion de receta exitosa ++++++++++++++\n");
-        CocinaService cocina = new CocinaService(despensa);
+        DespensaService despensaService = new DespensaService(despensa);
+        CocinaService cocina = new CocinaService(despensa, despensaService);
         try {
             System.out.println(cocina.cocinar(huevoduro));
         } catch (VidaUtilInsuficiente | StockInsuficiente e) {
             throw new RuntimeException(e);
         }
+        despensa.imprimirDespensa();
+        despensaService.reset_utensilio(olla);
         despensa.imprimirDespensa();
         System.out.println("\n");
 

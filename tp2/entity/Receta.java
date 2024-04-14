@@ -74,24 +74,7 @@ public class Receta {
         }
     }
 
-    public boolean check_ingredients (Despensa despensa) throws VidaUtilInsuficiente, StockInsuficiente {
-        // Checkeo si falta algun ingrediente, con que falte solo uno ya dara false
-        for(Ingrediente ingrediente_necesario : this.getIngredientes())
-        {
-            if (!despensa.dispIngrediente(ingrediente_necesario.getNombre(), ingrediente_necesario.getCantidad()))
-            {
-                throw new StockInsuficiente("Falta stock del o no se encuentra en la despensa --> " + ingrediente_necesario.getNombre());
-            }
-        }
-        for(Utensilio utensilio_necesario : this.getUtensilios())
-        {
-            if (!despensa.dispUtensilio(utensilio_necesario.getNombre(), utensilio_necesario.getVidaUtil()))
-            {
-                throw new VidaUtilInsuficiente("No le queda vida útil o no se encuentra en la despensa --> " + utensilio_necesario.getNombre());
-            }
-        }
-        return true;
-    }
+
 
 
 }
