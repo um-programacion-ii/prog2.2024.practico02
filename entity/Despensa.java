@@ -1,9 +1,9 @@
 package entity;
 
 import entity.customExceptions.InvalidNameException;
-import entity.customExceptions.InvalidNameException;
 import entity.customExceptions.ObjectAlreadyExistsException;
 import entity.customExceptions.StockInsuficienteException;
+import entity.customExceptions.VidaUtilInsuficienteException;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -34,10 +34,13 @@ public class Despensa {
     }
 
     public static String showItems(Map<String, ? extends Despensable> despensableMap) {
-        return despensableMap.values().stream().map(Object::toString).collect(Collectors.joining(", ", "\n", ""));
+        return despensableMap.values().stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", ", "\n", ""));
     }
 
-    public static <T extends Despensable> Map<String, T> getMapOf(Class<T> interfaz, Map<String, Despensable> despensables) {
+    public static <T extends Despensable> Map<String, T> getMapOf(Class<T> interfaz,
+                                                                  Map<String, Despensable> despensables) {
         return despensables.values().stream()
                 .filter(interfaz::isInstance)
                 .map(interfaz::cast)
@@ -55,7 +58,7 @@ public class Despensa {
 
     public void addUtensilio(Reutilizable utensilio) throws ObjectAlreadyExistsException {
         try {
-            Reutilizable existingUtensilio = this.inspectUtensilio(utensilio.getNombre());
+            this.inspectUtensilio(utensilio.getNombre());
             throw new ObjectAlreadyExistsException(String.format("Utensilio %s already exists", utensilio.getNombre()));
         } catch (InvalidNameException e) {
             this.despensables.put(utensilio.getNombre(), utensilio);
@@ -65,6 +68,11 @@ public class Despensa {
     public void getIngrediente(String name, int amount) throws StockInsuficienteException, InvalidNameException {
         Cocinable ingrediente = this.inspectIngrediente(name);
         ingrediente.sacar(amount);
+    }
+
+    public void useUtensilio(String name, int amount) throws VidaUtilInsuficienteException, InvalidNameException {
+        Reutilizable reutilizable = this.inspectUtensilio(name);
+        reutilizable.use(amount);
     }
 
     public Cocinable inspectIngrediente(String name) throws InvalidNameException {

@@ -1,12 +1,17 @@
 package service;
 
+import entity.Cocinable;
 import entity.Despensa;
 import entity.Ingrediente;
+import entity.Reutilizable;
+import entity.customExceptions.InvalidNameException;
 import entity.customExceptions.StockInsuficienteException;
 import entity.customExceptions.VidaUtilInsuficienteException;
 import entity.recetas.Receta;
 
-import java.util.Map;
+import javax.lang.model.type.NullType;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -40,26 +45,47 @@ public class CocinaService {
 
     @Override
     public String toString() {
-        return "CocinaService, " + this.showRecetas() + this.despensaService;
+        return "CocinaService, " + showRecetas(this.recetas) + this.despensaService;
     }
 
-    public String showRecetas() {
-        return "recetas: " +this.recetas.values().stream().map(item -> toString()).collect(Collectors.joining("", "\n\n", ""));
+    public static String showRecetas(Map<String, Receta> recetas) {
+        return "recetas: " + recetas.values().stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("", "\n\n", ""));
     }
 
-    public String makeReceta(String name) throws StockInsuficienteException, VidaUtilInsuficienteException {
-        Despensa ingredientesFaltantes = this.verifyAvaReceta(recetaNumber);
-        if (!ingredientesFaltantes.getIngredientes().isEmpty()) {
-            throw new StockInsuficienteException("Faltan los siguientes ingredientes:  "+ingredientesFaltantes.showIngredientes());
+    public Receta getReceta(String name) throws InvalidNameException {
+        Receta receta = this.recetas.get(name.trim().toLowerCase());
+        if (receta == null) {
+            throw new InvalidNameException("The recipe "+name+" doesn't exist.");
+        } else {
+            return receta;
         }
-        for (Ingrediente ingrediente: this.recetas[recetaNumber-1].getIngredientes()) {
-            try {
-                this.despensa.getIngrediente(ingrediente.getNombre(), ingrediente.getCantidad());
-            } catch (Exception e) {
-                throw new StockInsuficienteException(e.getMessage());
-            }
+    }
+
+    public String makeReceta(String name) throws StockInsuficienteException, VidaUtilInsuficienteException,
+            InvalidNameException {
+        List<Cocinable> ingredientesFaltantes = this.despensaService.verifyStock(new HashSet<>(this.recetas
+                .get(name.trim().toLowerCase()).getIngredientes().values()));
+        if (!ingredientesFaltantes.isEmpty()) {
+            throw new StockInsuficienteException("Faltan los siguientes ingredientes:  "
+                    + Despensa.showItems(ingredientesFaltantes.stream()
+                    .collect(Collectors.toMap(Cocinable::getNombre, Function.identity()))));
         }
-        return this.recetas[recetaNumber-1].getPreparacion();
+        List<Reutilizable> utensiliosFaltantes = this.despensaService.verifyVidaUtil(new HashSet<>(this.recetas
+                .get(name.trim().toLowerCase()).getUtensilios().values()));
+        if (!utensiliosFaltantes.isEmpty()) {
+            throw new VidaUtilInsuficienteException("Tiempo faltante en los siguientes utensilios:  "
+                    + Despensa.showItems(utensiliosFaltantes.stream()
+                    .collect(Collectors.toMap(Reutilizable::getNombre, Function.identity()))));
+        }
+        for (Cocinable ingrediente: this.getReceta(name).getIngredientes().values()) {
+            this.getDespensaService().getDespensa().getIngrediente(ingrediente.getNombre(), ingrediente.getCantidad());
+        }
+        for (Reutilizable reutilizable: this.getReceta(name).getUtensilios().values()) {
+            this.getDespensaService().getDespensa().useUtensilio(reutilizable.getNombre(), reutilizable.getVidaUtil());
+        }
+        return this.getReceta(name).getPreparacion();
     }
 
 }

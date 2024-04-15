@@ -48,13 +48,15 @@ public abstract class Receta {
     @Override
     public String toString() {
         return this.getClass().getSimpleName()+", tiempoCoccion: " + tiempoCoccion +" m"+
-                ", ingredientes:" + this.showItems(this.ingredientes) +
-                ", \nutensilios: "+this.showItems(this.utensilios)+
+                ", ingredientes:" + showItems(this.ingredientes) +
+                ", \nutensilios: "+ showItems(this.utensilios)+
                 ", \npreparacion: " + preparacion;
     }
 
-    private String showItems(Map<String, ? extends Despensable> itemsMap) {
-        return itemsMap.values().stream().map(item -> toString()).collect(Collectors.joining(", ", "\n", ""));
+    private static String showItems(Map<String, ? extends Despensable> itemsMap) {
+        return itemsMap.values().stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(", ", "\n", ""));
     }
 
     protected void setDefaultIngredientes(Object[][] ingredientes) {

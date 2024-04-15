@@ -4,10 +4,10 @@ import entity.Cocinable;
 import entity.Despensa;
 import entity.Reutilizable;
 import entity.customExceptions.InvalidNameException;
-import entity.customExceptions.InvalidUtensilioException;
 import entity.customExceptions.StockInsuficienteException;
 import entity.customExceptions.VidaUtilInsuficienteException;
 
+import java.util.List;
 import java.util.Set;
 
 public class DespensaService {
@@ -33,7 +33,7 @@ public class DespensaService {
         return "DespensaService: \n" + despensa;
     }
 
-    public void verifyStock(Set<Cocinable> ingredienteSet) throws StockInsuficienteException {
+    public List<Cocinable> verifyStock(Set<Cocinable> ingredienteSet) {
         Despensa ingredientesFaltantes = new Despensa();
         for (Cocinable ingrediente: ingredienteSet) {
             try {
@@ -46,31 +46,32 @@ public class DespensaService {
                 ingredientesFaltantes.addIngrediente(ingrediente);
             }
         }
-        if (!ingredientesFaltantes.getIngredientes().isEmpty()){
-            throw new StockInsuficienteException("Faltan los siguientes ingredientes:  "+ingredientesFaltantes.showItems(ingredientesFaltantes.getIngredientes()));
-        }
+         return ingredientesFaltantes.getDespensables().values().stream()
+                 .map(Cocinable.class::cast)
+                 .toList();
     }
 
-    public void verifyVidaUtil(Set<Reutilizable> utensilioSet) throws VidaUtilInsuficienteException {
+    public List<Reutilizable> verifyVidaUtil(Set<Reutilizable> utensilioSet) {
         Despensa utensiliosFaltantes = new Despensa();
         for (Reutilizable utensilio: utensilioSet) {
             try {
                 Reutilizable utensilioDisp = this.despensa.inspectUtensilio(utensilio.getNombre());
                 if (utensilioDisp.getVidaUtil() < utensilio.getVidaUtil()) {
                     utensilio.setVidaUtil(utensilio.getVidaUtil()-utensilioDisp.getVidaUtil());
-                    utensiliosFaltantes.getUtensilios().put(utensilio.getNombre(), utensilio);
+                    utensiliosFaltantes.getDespensables().put(utensilio.getNombre(), utensilio);
                 }
-            } catch (InvalidUtensilioException e) {
-                utensiliosFaltantes.getUtensilios().put(utensilio.getNombre(), utensilio);
+            } catch (InvalidNameException e) {
+                utensiliosFaltantes.getDespensables().put(utensilio.getNombre(), utensilio);
             }
         }
-        if (!utensiliosFaltantes.getIngredientes().isEmpty()){
-            throw new VidaUtilInsuficienteException("Tiempo faltante en los siguientes utensilios:  "+utensiliosFaltantes.showItems(utensiliosFaltantes.getUtensilios()));
-        }
+        return utensiliosFaltantes.getDespensables().values().stream()
+                .map(Reutilizable.class::cast)
+                .toList();
     }
 
     public void renovarUtensilios() {
-        for (Reutilizable utensilio: this.despensa.getUtensilios().values())
-            utensilio.renew();
+       Despensa.getMapOf(Reutilizable.class, this.despensa.getDespensables()).values().stream()
+               .filter(obj -> obj.getVidaUtil() == 0)
+               .forEach(Reutilizable::renew);
     }
 }
