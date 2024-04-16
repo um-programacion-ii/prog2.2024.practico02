@@ -2,14 +2,12 @@ package service;
 
 import entity.Cocinable;
 import entity.Despensa;
-import entity.Ingrediente;
 import entity.Reutilizable;
 import entity.customExceptions.InvalidNameException;
 import entity.customExceptions.StockInsuficienteException;
 import entity.customExceptions.VidaUtilInsuficienteException;
 import entity.recetas.Receta;
 
-import javax.lang.model.type.NullType;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -22,7 +20,7 @@ public class CocinaService {
     public CocinaService() {
     }
 
-    public CocinaService(Despensa despensa, Map<String, Receta> recetas, DespensaService despensaService) {
+    public CocinaService(Map<String, Receta> recetas, DespensaService despensaService) {
         this.recetas = recetas;
         this.despensaService = despensaService;
     }
