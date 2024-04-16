@@ -4,9 +4,6 @@ public class Chef {
     private String nombre;
     private Integer estrellasMichelin;
 
-    public Chef() {
-    }
-
     public Chef(String nombre, Integer estrellasMichelin) {
         this.nombre = nombre;
         this.estrellasMichelin = estrellasMichelin;

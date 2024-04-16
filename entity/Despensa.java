@@ -5,6 +5,7 @@ import entity.customExceptions.ObjectAlreadyExistsException;
 import entity.customExceptions.StockInsuficienteException;
 import entity.customExceptions.VidaUtilInsuficienteException;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ public class Despensa {
     private Map<String, Despensable> despensables;
 
     public Despensa() {
+        this.despensables = new HashMap<>();
     }
 
     public Despensa(Map<String, Despensable> despensables) {
@@ -30,13 +32,13 @@ public class Despensa {
     @Override
     public String toString() {
         return "\nIngredientes en despensa:" + showItems(getMapOf(Cocinable.class, this.despensables))
-                +"\nUtensilios en despensa:" +showItems(getMapOf(Reutilizable.class, this.despensables));
+                +"\n\nUtensilios en despensa:" +showItems(getMapOf(Reutilizable.class, this.despensables));
     }
 
     public static String showItems(Map<String, ? extends Despensable> despensableMap) {
         return despensableMap.values().stream()
                 .map(Object::toString)
-                .collect(Collectors.joining(", ", "\n", ""));
+                .collect(Collectors.joining(", \n", "\n", ""));
     }
 
     public static <T extends Despensable> Map<String, T> getMapOf(Class<T> interfaz,

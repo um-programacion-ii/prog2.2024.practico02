@@ -18,6 +18,8 @@ public class CocinaService {
     private DespensaService despensaService;
 
     public CocinaService() {
+        this.recetas = new HashMap<>();
+        this.despensaService = new DespensaService();
     }
 
     public CocinaService(Map<String, Receta> recetas, DespensaService despensaService) {
@@ -49,7 +51,7 @@ public class CocinaService {
     public static String showRecetas(Map<String, Receta> recetas) {
         return "recetas: " + recetas.values().stream()
                 .map(Object::toString)
-                .collect(Collectors.joining("", "\n\n", ""));
+                .collect(Collectors.joining("\n\n- ", "\n\n- ", ""));
     }
 
     public Receta getReceta(String name) throws InvalidNameException {
@@ -63,15 +65,13 @@ public class CocinaService {
 
     public String makeReceta(String name) throws StockInsuficienteException, VidaUtilInsuficienteException,
             InvalidNameException {
-        List<Cocinable> ingredientesFaltantes = this.despensaService.verifyStock(new HashSet<>(this.recetas
-                .get(name.trim().toLowerCase()).getIngredientes().values()));
+        List<Cocinable> ingredientesFaltantes = this.despensaService.verifyStock(new HashSet<>(this.getReceta(name).getIngredientes().values()));
         if (!ingredientesFaltantes.isEmpty()) {
             throw new StockInsuficienteException("Faltan los siguientes ingredientes:  "
                     + Despensa.showItems(ingredientesFaltantes.stream()
                     .collect(Collectors.toMap(Cocinable::getNombre, Function.identity()))));
         }
-        List<Reutilizable> utensiliosFaltantes = this.despensaService.verifyVidaUtil(new HashSet<>(this.recetas
-                .get(name.trim().toLowerCase()).getUtensilios().values()));
+        List<Reutilizable> utensiliosFaltantes = this.despensaService.verifyVidaUtil(new HashSet<>(this.getReceta(name).getUtensilios().values()));
         if (!utensiliosFaltantes.isEmpty()) {
             throw new VidaUtilInsuficienteException("Tiempo faltante en los siguientes utensilios:  "
                     + Despensa.showItems(utensiliosFaltantes.stream()

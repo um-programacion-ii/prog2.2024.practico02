@@ -6,9 +6,6 @@ public class Ingrediente implements Cocinable {
     private String nombre;
     private Integer cantidad;
 
-    public Ingrediente() {
-    }
-
     public Ingrediente(String nombre, Integer cantidad) {
         this.nombre = nombre;
         this.cantidad = cantidad;

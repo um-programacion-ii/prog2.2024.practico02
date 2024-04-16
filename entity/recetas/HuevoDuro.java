@@ -17,7 +17,8 @@ public class HuevoDuro extends Receta{
         this.preparacion = "Poner un huevo en agua hirviendo durante 10 minutos.";
     }
 
-    public HuevoDuro(Integer tiempoCoccion, Map<String, Cocinable> ingredientes, Map<String, Reutilizable> utensilios, String preparacion) {
+    public HuevoDuro(Integer tiempoCoccion, Map<String, Cocinable> ingredientes,
+                     Map<String, Reutilizable> utensilios, String preparacion) {
         this.tiempoCoccion = tiempoCoccion;
         this.ingredientes = ingredientes;
         this.utensilios = utensilios;

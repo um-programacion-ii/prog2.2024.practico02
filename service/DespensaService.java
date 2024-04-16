@@ -14,6 +14,7 @@ public class DespensaService {
     private Despensa despensa;
 
     public DespensaService() {
+        this.despensa = new Despensa();
     }
 
     public DespensaService(Despensa despensa) {

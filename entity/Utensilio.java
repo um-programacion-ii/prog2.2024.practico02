@@ -7,9 +7,6 @@ public class Utensilio implements Reutilizable {
     private Integer vidaUtil;
     private Integer vidaUtilInicial;
 
-    public Utensilio() {
-    }
-
     public Utensilio(String nombre, Integer vidaUtil) {
         this.nombre = nombre;
         this.vidaUtil = vidaUtil;
@@ -34,14 +31,7 @@ public class Utensilio implements Reutilizable {
     @Override
     public void setVidaUtil(Integer vidaUtil) {
         this.vidaUtil = vidaUtil;
-    }
-
-    public Integer getVidaUtilInicial() {
-        return vidaUtilInicial;
-    }
-
-    public void setVidaUtilInicial(Integer vidaUtilInicial) {
-        this.vidaUtilInicial = vidaUtilInicial;
+        this.vidaUtilInicial = vidaUtil;
     }
 
     @Override
@@ -51,7 +41,7 @@ public class Utensilio implements Reutilizable {
 
     @Override
     public void use(int usageTime) throws VidaUtilInsuficienteException {
-        if (usageTime > this.vidaUtil) {
+        if (usageTime <= this.vidaUtil) {
             this.vidaUtil -= usageTime;
         } else {
             throw new VidaUtilInsuficienteException(String.format("Not enough remaining usage time of %s", this.nombre));

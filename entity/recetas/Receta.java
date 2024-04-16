@@ -56,14 +56,18 @@ public abstract class Receta {
     private static String showItems(Map<String, ? extends Despensable> itemsMap) {
         return itemsMap.values().stream()
                 .map(Object::toString)
-                .collect(Collectors.joining(", ", "\n", ""));
+                .collect(Collectors.joining(", \n", "\n", ""));
     }
 
     protected void setDefaultIngredientes(Object[][] ingredientes) {
-        this.ingredientes = Arrays.stream(ingredientes).map(item -> new Ingrediente((String) item[0], (Integer) item[1])).collect(Collectors.toMap(Ingrediente::getNombre, Function.identity()));
+        this.ingredientes = Arrays.stream(ingredientes)
+                .map(item -> new Ingrediente((String) item[0], (Integer) item[1]))
+                .collect(Collectors.toMap(Ingrediente::getNombre, Function.identity()));
     }
 
     protected void setDefaultUtensilios(Object[][] utensilios) {
-        this.utensilios = Arrays.stream(utensilios).map(item -> new Utensilio((String) item[0], (Integer) item[1])).collect(Collectors.toMap(Utensilio::getNombre, Function.identity()));
+        this.utensilios = Arrays.stream(utensilios)
+                .map(item -> new Utensilio((String) item[0], (Integer) item[1]))
+                .collect(Collectors.toMap(Utensilio::getNombre, Function.identity()));
     }
 }
